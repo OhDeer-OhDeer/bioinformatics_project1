@@ -1,3 +1,3 @@
 # bioinformatics_project1
 
-sophia test commit
+The aim of this project is to code a protein-search system and rank the results with the Smith-Waterman Algorithm

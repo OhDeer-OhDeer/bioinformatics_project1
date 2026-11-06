@@ -4,7 +4,7 @@ import kmer
 import argparse
 from timeit import default_timer as timer
 
-# retreive candidates with k-mers and run smith waterman on candidates
+# retrieve candidates with k-mers and run smith waterman on candidates
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--k", type=int, default=3,)
@@ -19,6 +19,9 @@ def main():
 
     index = kmer.build_kmer_index(globals.seq_db, k)
 
+    for key in index:
+        print(key + ": " + str(index[key]))
+"""
     candidate_ids = kmer.retrieve_candidates(globals.query, index, k, N)
 
     aln_list = []
@@ -33,7 +36,7 @@ def main():
 
     end = timer()
     print("time is " + str(end - start))
-
+"""
 
 if __name__ == '__main__':
     main()

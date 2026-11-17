@@ -4,7 +4,7 @@ from timeit import default_timer as timer
 
 
 # Run full smith-waterman search on all database sequences
-if __name__ == '__main__':
+def run():
     start = timer()
 
     aln_list = []
@@ -19,3 +19,5 @@ if __name__ == '__main__':
 
     end = timer()
     print("time is " + str(end - start))
+
+    return end - start

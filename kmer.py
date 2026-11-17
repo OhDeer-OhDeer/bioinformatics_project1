@@ -6,7 +6,7 @@ def build_kmer_index(seq_db, k):
     d = {"": []}
     for seq in seq_db:
         # For each kmer in seq, add seq to that kmer's dict entry
-        for i in range(0, len(seq) - k):
+        for i in range(0, len(seq) - k + 1):
             kmer = seq[i:i+k]
             if kmer not in d:
                 d[kmer] = []
@@ -24,9 +24,31 @@ def retrieve_candidates(query, index, k, N):
         # for now, it doesn't.
         if kmer not in query_kmer_list:
             query_kmer_list.append(kmer)
-    # TODO: count shared k-mers for each database protein
-    for kmer in index:
-        pass
-    # TODO: retain the top N candidate proteins
 
-    return ""
+
+     # Count shared kmers for each database protein
+    scores = {}
+
+    for kmer in query_kmer_list:
+
+        if kmer in index:
+            for seq in index[kmer]:
+
+                if seq not in scores:
+                    scores[seq] = 0
+
+                scores[seq] += 1
+
+    # produce sorted list of tuples: (sequence, score) where score is num of shared kmers
+    sorted_candidates = sorted(
+        scores.items(), # get dict items as tuples
+        key=lambda x: x[1], # sort by score (second item)
+        reverse=True # highest to lowest
+    )
+
+    # select top N
+    candidates = []
+    for seq, score in sorted_candidates[:N]:
+        candidates.append(seq)
+
+    return candidates
